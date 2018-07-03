@@ -25,6 +25,7 @@
     <% end %>
   </span>
   <% if logged_in? %>
+  <% if current_user.following?(@user) %>
   <span class="comments">
        <ul>
       <% post.comments.each do |comment| %>
@@ -49,6 +50,7 @@
       <%= f.text_area :content, placeholder: "Comment..." %>
     </div>
     <%= f.submit "Comment", class: "btn btn-primary" %>
+  <% end %>
   <% end %>
   <% end %>
 </li>
