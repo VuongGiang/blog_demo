@@ -4,9 +4,9 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
 
-    respond_to do |format|
-      if @comment.save
-        #respond_to do |format|
+    #respond_to do |format|
+    if @comment.save
+        respond_to do |format|
         format.html { redirect_to request.referrer }
         format.js
     end
@@ -15,15 +15,17 @@ class CommentsController < ApplicationController
   end
 
 
+  def edit
+    @comment = Comment.find(params[:id])
+  end
+
   def update
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comment }
-      else
-        format.html { render :edit }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    @comment = Comment.find(params[:id])
+    if @comment.update_attributes(comment_params)
+      flash[:success] = "Comment updated"
+      redirect_to root_url
+    else
+      render 'edit'
     end
   end
 

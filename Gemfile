@@ -19,6 +19,8 @@ gem 'carrierwave',             '1.2.2'
 gem 'mini_magick',             '4.7.0'
 gem 'fog', '1.42'
 gem 'sqlite3'
+gem "devise"
+gem "acts_as_votable"
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets

@@ -8,49 +8,25 @@
   </span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(post.created_at) %> ago.
-     <% if current_user.likes?(@post) %>
-    <%= form_for(current_user.likes.find_by(@post.id),
-             html: { method: :delete }) do |f| %>
-  <%= f.submit "Unlike", class: "btn" %>
-<% end %>
-    <% else %>
-    <%= form_for(current_user.likes.build) do |f| %>
-  <div><%= hidden_field_tag :user_id %></div>
-  <%= f.submit "Like", class: "btn btn-primary" %>
-<% end %>
-    <% end %>
+
     <% if current_user?(post.user) %>
       <%= link_to "delete", post, method: :delete,
                                        data: { confirm: "You sure?" } %>
+      <%= link_to 'edit', edit_post_path(post) %>
     <% end %>
   </span>
-  <% if logged_in? %>
-  <% if current_user.following?(@user) %>
-  <span class="comments">
-       <ul>
-      <% post.comments.each do |comment| %>
-        <li>
-        <%= link_to gravatar_for(comment.user, size: 40), post.user %><span class = name><b><%= comment.user.name %></b> </span> <%= comment.content %></br>
-        <span class="timestamp">
-    Posted <%= time_ago_in_words(post.created_at) %> ago.
-    <% if current_user?(comment.user) %>
-      <%= link_to "delete", comment, method: :delete,
-                                       data: { confirm: "You sure?" } %>
-        </span>
-    <% end %>
-    <% end %>
 
-        </li>
-    </ul>
-  </span>
-  <%= form_for(post.comments.build user_id: current_user.id) do |f| %>
-    <div class="field">
-      <%= f.hidden_field :user_id %>
-      <%= f.hidden_field :post_id %>
-      <%= f.text_area :content, placeholder: "Comment..." %>
-    </div>
-    <%= f.submit "Comment", class: "btn btn-primary" %>
+      <span class="comments">
+           <%= render 'posts/show_comment', post: post %>
+      </span>
+  <% if logged_in? %>
+
+    <% if current_user.following?(@user) || current_user?(post.user) %>
+
+      <span class="form_comments">
+            <%= render 'posts/form_comment', post: post %>
+      </span>
+    <% end %>
   <% end %>
-  <% end %>
-  <% end %>
+
 </li>

@@ -1,0 +1,2 @@
+$("#<%= @comment.post_id %> .comments").html("<%= escape_javascript(render('posts/show_comment', post: @comment.post)) %>");
+$("#<%= @comment.post_id %> [name='comment[content]']").val('');
