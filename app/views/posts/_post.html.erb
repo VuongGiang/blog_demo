@@ -17,14 +17,14 @@
   </span>
 
       <span class="comments">
-           <%= render 'posts/show_comment', post: post %>
+           <%= render 'comments/show_comment', post: post %>
       </span>
   <% if logged_in? %>
 
     <% if current_user.following?(@user) || current_user?(post.user) %>
 
       <span class="form_comments">
-            <%= render 'posts/form_comment', post: post %>
+            <%= render 'comments/form_comment', post: post %>
       </span>
     <% end %>
   <% end %>
